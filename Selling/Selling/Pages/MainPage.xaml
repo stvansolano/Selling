@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Selling.Pages.MainPage"
+             xmlns:i18n="clr-namespace:Selling.Lenguages;assembly=Selling"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="{i18n:Translate orders}"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+  <ListView
+      x:Name="Lista"
+      ItemTemplate="{StaticResource OrderItemTemplate}"
+      ItemsSource="{Binding Orders}"
+      HasUnevenRows="True">
+  </ListView>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="ic_action_add.png" Command="{Binding GoToCommand}" CommandParameter="NewOrderPage">
+    </ToolbarItem>
+  </ContentPage.ToolbarItems>
+</ContentPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Selling.Pages.NewOrderPage"
+             xmlns:i18n="clr-namespace:Selling.Lenguages;assembly=Selling"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="{i18n:Translate NewOrder}"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+  <ScrollView BindingContext="{Binding NewOrder}">
+    <StackLayout Padding="8">
+      <Label Text="{i18n:Translate Title}"
+             TextColor="{StaticResource FontColor}"></Label>
+      <Entry Placeholder="{Binding TWPV1, Mode=TwoWay}"
+             Text="{Binding Title, Mode=TwoWay}" 
+             TextColor="{StaticResource FontColor}"
+             BackgroundColor="{StaticResource BackgroundColorText}">
+      </Entry>
+      <Label TextColor="{StaticResource FontColor}"
+             Text="{i18n:Translate Client}"></Label>
+      <Entry TextColor="{StaticResource FontColor}"
+             Text="{Binding Client, Mode=TwoWay}"
+             BackgroundColor="White"></Entry>
+      <Label TextColor="{StaticResource FontColor}"
+             Text="{i18n:Translate Description}"></Label>
+      <Editor TextColor="{StaticResource FontColor}"
+              HeightRequest="100"
+              Text="{Binding Description, Mode=TwoWay}"
+              BackgroundColor="White"></Editor>
+      <Label TextColor="{StaticResource FontColor}"
+             Text="{i18n:Translate DeliveryInformation}"></Label>
+      <Editor TextColor="{StaticResource FontColor}"
+              Text="{Binding DeliveryInformation, Mode=TwoWay}"
+              HeightRequest="100"
+              BackgroundColor="White"></Editor>
+      <Label TextColor="{StaticResource FontColor}"
+             Text="{i18n:Translate DeliveryDate}"></Label>
+      <DatePicker
+        BackgroundColor="White"
+        Date="{Binding DeliveryDate, Mode=TwoWay}">
+        <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
+      </DatePicker>
+      <Button Command="{Binding SaveCommand}"
+        Text="{i18n:TranslateExtension Text=Save}"></Button>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="Selling.Pages.ClientsPage"
+               xmlns:i18n="clr-namespace:Selling.Lenguages;assembly=Selling"
+               BackgroundColor="{StaticResource BackgroundColor}"
+               Title="{i18n:Translate tcountries}"
+               BindingContext="{Binding Main, Source={StaticResource Locator}}">
+      <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CallButton"
+                 Command="{Binding CallCommand}"
+                   Text="{i18n:Translate Refresh}" />
+        <ToolbarItem Command="{Binding StatusCommand}"
+               Order="Secondary"
+                   Text="{i18n:Translate Status}" />
+        <ToolbarItem Command="{Binding SearchCommand}"
+               Order="Secondary"
+                   Text="{i18n:Translate Search}" />
+      </ContentPage.ToolbarItems>
+      <Grid>
+        <ActivityIndicator x:Name="Indicator"
+                         IsRunning="{Binding IsBusy}"
+			               />
+        <ScrollView x:Name="StatusPanel"
+                VerticalOptions="FillAndExpand"
+                IsVisible="false"
+                Padding="10">
+          <Label x:Name="Response"
+               Text="{i18n:Translate Responsehere}"
+				   />
+        </ScrollView>
+        <ListView x:Name="List" ItemsSource="{Binding Countries}"
+              IsPullToRefreshEnabled="True"
+              IsRefreshing="{Binding IsBusy}"
+              VerticalOptions="FillAndExpand"
+              RefreshCommand="{Binding CallCommand}"
+              CachingStrategy="RecycleElement"
+              HasUnevenRows="True"
+              ItemTemplate="{StaticResource CountryItemTemplate}">
+        </ListView>
+      </Grid>
+</ContentPage>

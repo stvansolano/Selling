@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Selling.Pages.SettingsPage"
+             xmlns:i18n="clr-namespace:Selling.Lenguages;assembly=Selling"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="{i18n:Translate Settings}"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+  <ScrollView BindingContext="{Binding NewSettings}">
+    <StackLayout Padding="8">
+
+      <Label Text="{i18n:Translate Lenguage}"
+             TextColor="{StaticResource FontColor}"></Label>
+      
+      <Picker BackgroundColor="{StaticResource BackgroundColor}"
+              SelectedIndex="{Binding Leguange, Mode=TwoWay}"
+              HorizontalOptions="FillAndExpand">       
+        <Picker.Items>
+          <x:String>Español</x:String>
+          <x:String>Ingles</x:String>
+        </Picker.Items>
+      </Picker>
+
+      <Button Text="{i18n:TranslateExtension Text=Save}"
+              Command="{Binding SaveSettings}"></Button>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>
