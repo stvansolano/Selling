@@ -89,7 +89,7 @@ namespace Selling.Lenguages {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cliente.
+        ///   Busca una cadena traducida similar a Client.
         /// </summary>
         internal static string Client {
             get {
@@ -260,7 +260,7 @@ namespace Selling.Lenguages {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Todos los Paises.
+        ///   Busca una cadena traducida similar a Empresas.
         /// </summary>
         internal static string tcountries {
             get {

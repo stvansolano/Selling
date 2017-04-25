@@ -1,84 +1,61 @@
-﻿//using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
-using Plugin.Connectivity;
+using System.Net.Http;
+using Selling.Model;
 
 namespace Selling.Services
 {
-    public abstract class PlainRestClient
+    public class PlainRestClient
     {
-        protected string BaseUrl { get; set; }
 
-        protected PlainRestClient(string baseUrl)
+        public async Task<List<Company>> GetAllCompanys()
         {
-            BaseUrl = baseUrl;
-        }
-
-        public async Task<string> GetData()
-        {
-            using (var httpClient = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
-                return await httpClient.GetStringAsync(BaseUrl).ConfigureAwait(false);
-            }
-        }
+                string url = "http://apirestproyectoxam.azurewebsites.net/tables/Company";
+                client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
 
-        protected async Task<IEnumerable<T>> GetAsJson<T>()
-            where T : class
-        {
-            var result = Enumerable.Empty<T>();
-            //using (var httpClient = new HttpClient())
-            //{
-            //    //httpClient.DefaultRequestHeaders.Accept.Clear();
-            //    //httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //   // BaseUrl = ;
-            //    var response = await httpClient.GetAsync("https://restcountries.eu/rest/v1/all").ConfigureAwait(false);
+                var result = await client.GetAsync(url);
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        //var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                string data = await result.Content.ReadAsStringAsync();
 
-            //        //if (!string.IsNullOrWhiteSpace(json))
-            //        //{
-            //        //    result = await Task.Run(() =>
-            //        //    {
-            //        //        return JsonConvert.DeserializeObject<IEnumerable<T>>(json);
-            //        //    }).ConfigureAwait(false);
-            //        //}
-            //    }
-            //}
-            //return result;
-            if (CrossConnectivity.Current.IsConnected == true)
-            {
-                using (var httpClient = new HttpClient())
+                if (result.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage llamada = await httpClient.GetAsync("http://restcountries.eu/rest/v1/all").ConfigureAwait(false);
-
-                    //var paisPrueba = new Pais() { name = "Nueva Entrada" };
-                    //string parseo = JsonConvert.SerializeObject(T);
-                    //Debug.WriteLine(parseo);
-                    //await httpClient.PostAsync("/Inventarios", new StringContent(parseo), Encoding.UTF8, "application/json").ConfigureAwait(false);
-
-                    //https://restcountries.eu/#api-endpoints
-                    if (llamada.IsSuccessStatusCode)
-                    {
-                        //var json = await llamada.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        //result = await Task.Run(() =>
-                        //{
-                        //    return JsonConvert.DeserializeObject<IEnumerable<T>>(json);
-                        //}).ConfigureAwait(false);
-                    }
+                    return JsonConvert.DeserializeObject<List<Company>>(data);
                 }
+                else
+                    return new List<Company>();
             }
-            return result;
         }
 
-        protected string FromUrl(string baseUrl, string resource)
+        public async Task<Company> CreateCompany(Company company)
         {
-            return string.Join("/", baseUrl, resource);
+            using (HttpClient client = new HttpClient())
+            {
+                string url = "http://apirestproyectoxam.azurewebsites.net/tables/Geolocation";
+                client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
+
+                string content = JsonConvert.SerializeObject(company);
+
+                StringContent body = new StringContent(content, Encoding.UTF8, "application/json");
+
+                var result = await client.PostAsync(url, body);
+
+                string data = await result.Content.ReadAsStringAsync();
+
+                if (result.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Company>(data);
+                }
+                else
+                    return null;
+
+            }
         }
+
     }
 }

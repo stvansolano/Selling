@@ -6,20 +6,9 @@
                BackgroundColor="{StaticResource BackgroundColor}"
                Title="{i18n:Translate tcountries}"
                BindingContext="{Binding Main, Source={StaticResource Locator}}">
-      <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="CallButton"
-                 Command="{Binding CallCommand}"
-                   Text="{i18n:Translate Refresh}" />
-        <ToolbarItem Command="{Binding StatusCommand}"
-               Order="Secondary"
-                   Text="{i18n:Translate Status}" />
-        <ToolbarItem Command="{Binding SearchCommand}"
-               Order="Secondary"
-                   Text="{i18n:Translate Search}" />
-      </ContentPage.ToolbarItems>
       <Grid>
         <ActivityIndicator x:Name="Indicator"
-                         IsRunning="{Binding IsBusy}"
+                         IsRunning="{Binding IsRefreshing}"
 			               />
         <ScrollView x:Name="StatusPanel"
                 VerticalOptions="FillAndExpand"
@@ -29,14 +18,17 @@
                Text="{i18n:Translate Responsehere}"
 				   />
         </ScrollView>
-        <ListView x:Name="List" ItemsSource="{Binding Countries}"
-              IsPullToRefreshEnabled="True"
-              IsRefreshing="{Binding IsBusy}"
+        <ListView x:Name="List" ItemsSource="{Binding Companys}"
               VerticalOptions="FillAndExpand"
-              RefreshCommand="{Binding CallCommand}"
-              CachingStrategy="RecycleElement"
+              ItemTemplate="{StaticResource CompanyItemTemplate}"
               HasUnevenRows="True"
-              ItemTemplate="{StaticResource CountryItemTemplate}">
+              IsPullToRefreshEnabled="True"
+              RefreshCommand="{Binding RefreshCommand}"
+              IsRefreshing="{Binding IsRefreshing}">          
         </ListView>
       </Grid>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="ic_action_add.png" Command="{Binding GoToCommandM}" CommandParameter="NewClientsPage">
+    </ToolbarItem>
+  </ContentPage.ToolbarItems>
 </ContentPage>

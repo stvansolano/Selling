@@ -128,7 +128,7 @@
     <value>Bienvenidos</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Cliente</value>
+    <value>Client</value>
   </data>
   <data name="Clients" xml:space="preserve">
     <value>Clientes</value>
@@ -179,7 +179,7 @@
     <value>Refrescar</value>
   </data>
   <data name="tcountries" xml:space="preserve">
-    <value>Todos los Paises</value>
+    <value>Empresas</value>
   </data>
   <data name="Responsehere" xml:space="preserve">
     <value>Aqui</value>

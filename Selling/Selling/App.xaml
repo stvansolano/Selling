@@ -60,32 +60,27 @@
         </ViewCell>
       </DataTemplate>
       
-      <DataTemplate x:Key="CountryItemTemplate">
-        <ViewCell>
-          <Grid Padding="8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto">
-              </ColumnDefinition>
-              <ColumnDefinition Width="*">
-              </ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Image Source="{Binding icon}" Aspect="Fill"
-                   HeightRequest="30" WidthRequest="70"
-				   />
-            <StackLayout Orientation="Vertical"
-              Margin="10,0,10,0"
-              VerticalOptions="FillAndExpand">
-              <Label Text="{Binding Model.Name}" LineBreakMode="TailTruncation" Margin="0" FontSize="20" TextColor="Black" />
-              <Label Text="{Binding Model.Region}"
-                 Margin="0"
-                 TextColor="#C0C0C0" />
-            </StackLayout>
-            <StackLayout.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding BrowseCommand}" CommandParameter="{Binding}"/>
-            </StackLayout.GestureRecognizers>
-          </Grid>
-        </ViewCell>
-      </DataTemplate>
+        <DataTemplate x:Key="CompanyItemTemplate">
+          <ViewCell>
+            <Grid Padding="8">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+              </Grid.ColumnDefinitions>
+              <Image WidthRequest="50" HeightRequest="50" VerticalOptions="Start" Source="icon.png"></Image>
+              <StackLayout Grid.Column="1">
+                <Label FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       TextColor="{StaticResource FontColor}"
+                       Text="{Binding Title}"></Label>
+
+                <Label VerticalOptions="Center"
+                       TextColor="{StaticResource FontColor}"
+                       Text="{Binding Description}"></Label>
+              </StackLayout>
+            </Grid>
+          </ViewCell>
+        </DataTemplate>
       
     </ResourceDictionary>
   </Application.Resources>

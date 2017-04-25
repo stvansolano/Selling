@@ -12,13 +12,13 @@ namespace Selling.Infrastructure
     {
         public NavigationService navigationService;
         public ComponentesMensajes ComponentesMensajes;
-        public CountryService DataService;
+        public PlainRestClient apiService;
 
         public Administrador()
         {
             ComponentesMensajes = new ComponentesMensajes();
             navigationService = new NavigationService();
-            DataService = new CountryService();
+            apiService = new PlainRestClient();
         }
     }
 }

@@ -4,9 +4,11 @@ using Selling.Infrastructure;
 using Selling.Lenguages;
 using Selling.Pages;
 using Selling.Services;
+using Selling.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
@@ -17,7 +19,7 @@ using Xamarin.Forms;
 
 namespace Selling.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
         Administrador Admin;
         public MainViewModel()
@@ -27,19 +29,19 @@ namespace Selling.ViewModels
             LoadMenu();
             NewSettings = new SettingsViewModel();
             NewOrder = new OrderViewModel();
-            NewCountry = new CountryViewModel();                       
+            NewCompany = new CompanyViewModel();                       
         }
 
         #region Properties
         //paramatros paginas que se establecen em las paginas
-        public CountryViewModel NewCountry { get; private set; }
+        public CompanyViewModel NewCompany { get; private set; }
         public OrderViewModel NewOrder { get; private set; }
         public SettingsViewModel NewSettings { get; private set; }
         //listas y objetos que se consultan de la base de datos
         public ObservableCollection<OrderViewModel> Orders {get;set;}
         public SettingsViewModel Settings { get; set; }
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
-        public ObservableCollection<CountryViewModel> Countries { get; set; }
+        public ObservableCollection<CompanyViewModel> Companys { get; set; }
         #endregion
 
         #region Commands
@@ -50,6 +52,23 @@ namespace Selling.ViewModels
         }
 
         private void GoTo(string pageName)
+        {
+            switch (pageName)
+            {
+                case "NewOrderPage":
+                    App.Navigator.PushAsync(new NewOrderPage());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public ICommand GoToCommandM
+        {
+            get { return new RelayCommand<string>(GoToM); }
+        }
+
+        private void GoToM(string pageName)
         {
             switch (pageName)
             {
@@ -128,100 +147,72 @@ namespace Selling.ViewModels
                     App.Lenguage = Settings.Leguange;
                 }
             };
-            CallCountries();
+            Companys = new ObservableCollection<CompanyViewModel>();
+            CallCompanys();
         }
 
         //paises metodos
         public ICommand CallCommand
         {
-            get { return new RelayCommand(CallCountries); }
+            get { return new RelayCommand(CallCompanys); }
         }
 
-        private async void CallCountries()
+        private async void CallCompanys()
         {
-            Countries = new ObservableCollection<CountryViewModel>();
-            if (Countries.Any())
+            var list = await Admin.apiService.GetAllCompanys();
+
+            Companys.Clear();
+
+            foreach (var item in list)
             {
-                //Indicator.IsVisible = false;
-            }
-            //CallButton.Text = "Calling";
-            //IsBusy = true;
-            //List.IsVisible = true;
-            //Response.Text = string.Empty;
-
-            try
-            {
-                var result = await Admin.DataService.GetCountries();
-
-                Countries.Clear();
-
-                foreach (var item in result)
+                Companys.Add(new CompanyViewModel()
                 {
-                    Countries.Add(new CountryViewModel(item)
-                    {
-                        FlagSource = ImageSource.FromUri(Admin.DataService.GetFlagSource(item.Alpha2Code)),
-                        BrowseCommand = new Command<CountryViewModel>(BrowseCountry)
-                    });
-                }
-                //Response.Text = string.Empty;
-                //StatusPanel.IsVisible = false;
-            }
-            catch (Exception ex)
-            {
-                //Response.Text = ex.Message;
-                //StatusPanel.IsVisible = true;
-                //List.IsVisible = false;
-            }
-            finally
-            {
-                //IsBusy = false;
-                //CallButton.Text = "Refresh";
+                    Title = item.Title,
+                    Description = item.Description,
+                    Address = item.Address,
+                    FechaCreacion = item.FechaCreacion
+                });
             }
         }
 
-        private async void BrowseCountry(CountryViewModel obj)
+        private bool _isRefreshing;
+        public bool IsRefreshing
         {
-            //await NavigationService.PushAsync<CountryPage>(obj);
-        }
-
-        public ICommand StatusCommand
-        {
-            get { return new RelayCommand(CallPlain); }
-        }
-
-        public ICommand SearchCommand
-        {
-            get { return new RelayCommand(CallSearch); }
-        }
-
-        private async void CallPlain()
-        {
-            try
+            get { return _isRefreshing; }
+            set
             {
-                await Admin.DataService.GetData();
-                //List.IsVisible = false;
-                //StatusPanel.IsVisible = true;
-            }
-            catch (Exception ex)
-            {
-                //Response.Text = ex.Message;
-                //StatusPanel.IsVisible = true;
-                //List.IsVisible = false;
-            }
-            finally
-            {
-                //IsBusy = false;
-                //CallButton.Text = "Refresh";
+                if (_isRefreshing == value)
+                    return;
+
+                _isRefreshing = value;
+                OnPropertyChanged("IsRefreshing");
             }
         }
 
-
-        private async void CallSearch()
+        public ICommand RefreshCommand
         {
-            //var searchPage = new SearchPage();
-            //searchPage.Countries = Countries;
+            get { return new RelayCommand(RefreshLV); }
+        }
 
-            //await NavigationService.PushAsync(searchPage);
+        private async void RefreshLV()
+        {
+
+            IsRefreshing = true;
+
+            LoadData();
+
+            IsRefreshing = false;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged == null)
+                return;
+
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
