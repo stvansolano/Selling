@@ -9,9 +9,9 @@
 
   <ScrollView BindingContext="{Binding NewCompany}">
     <StackLayout Padding="8">
+      
       <Label TextColor="{StaticResource FontColor}"
              Text="Titulo"></Label>
-
       <Entry x:Name="title"
              TextColor="{StaticResource FontColor}"
              Text="{Binding Title, Mode=TwoWay}"
@@ -19,15 +19,20 @@
 
       <Label TextColor="{StaticResource FontColor}"
              Text="Descripcion"></Label>
-
-      <Editor x:Name="description"
-              TextColor="{StaticResource FontColor}"
-              Text="{Binding Description, Mode=TwoWay}"
-              BackgroundColor="White"></Editor>
+      <Entry x:Name="Description"
+             TextColor="{StaticResource FontColor}"
+             Text="{Binding Description, Mode=TwoWay}"
+             BackgroundColor="White"></Entry>
+      
+      <Label TextColor="{StaticResource FontColor}"
+             Text="Direccion"></Label>
+      <Entry x:Name="Address"
+             TextColor="{StaticResource FontColor}"
+             Text="{Binding Address, Mode=TwoWay}"
+             BackgroundColor="White"></Entry>
 
       <Label TextColor="{StaticResource FontColor}"
              Text="Fecha Creacion"></Label>
-
       <DatePicker
           x:Name="datePicker"
           Date="{Binding FechaCreacion, Mode=TwoWay}"

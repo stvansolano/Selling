@@ -56,6 +56,7 @@ namespace Selling.ViewModels
             switch (pageName)
             {
                 case "NewOrderPage":
+                    NewOrder = new OrderViewModel();
                     App.Navigator.PushAsync(new NewOrderPage());
                     break;
                 case "NewClientsPage":

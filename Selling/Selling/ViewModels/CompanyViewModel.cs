@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Selling.Infrastructure;
 using Selling.Model;
+using Selling.Pages;
 using Selling.Services;
 using System;
 using System.Collections.Generic;
@@ -21,19 +22,10 @@ namespace Selling.ViewModel
             FechaCreacion = DateTime.Today;
         }
 
-        [JsonProperty("Id")]
         public string Id { get; set; }
-
-        [JsonProperty("Title")]
         public string Title { get; set; }
-
-        [JsonProperty("Description")]
         public string Description { get; set; }
-
-        [JsonProperty("Date_Created")]
         public DateTime FechaCreacion { get; set; }
-
-        [JsonProperty("Address")]
         public string Address { get; set; }
 
         public ICommand BrowseCommand { get; set; }

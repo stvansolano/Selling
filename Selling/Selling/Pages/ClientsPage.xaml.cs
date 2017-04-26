@@ -13,9 +13,17 @@ namespace Selling.Pages
 {
     public partial class ClientsPage : ContentPage
     {
+        MainViewModel mainx = new MainViewModel();
         public ClientsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            mainx.LoadData();
+            List.ItemsSource = mainx.Companys;
         }
     }
 }
