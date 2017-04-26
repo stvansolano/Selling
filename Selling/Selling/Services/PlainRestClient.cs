@@ -36,7 +36,7 @@ namespace Selling.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = "http://apirestproyectoxam.azurewebsites.net/tables/Geolocation";
+                string url = "http://apirestproyectoxam.azurewebsites.net/tables/Company";
                 client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
 
                 string content = JsonConvert.SerializeObject(company);

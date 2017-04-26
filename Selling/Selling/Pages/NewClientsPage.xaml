@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="Selling.Pages.NewClientsPage"
+               xmlns:i18n="clr-namespace:Selling.Lenguages;assembly=Selling"
+               BackgroundColor="{StaticResource BackgroundColor}"
+               Title="{i18n:Translate tcountries}"
+               BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+  <ScrollView BindingContext="{Binding NewCompany}">
+    <StackLayout Padding="8">
+      <Label TextColor="{StaticResource FontColor}"
+             Text="Titulo"></Label>
+
+      <Entry x:Name="title"
+             TextColor="{StaticResource FontColor}"
+             Text="{Binding Title, Mode=TwoWay}"
+             BackgroundColor="White"></Entry>
+
+      <Label TextColor="{StaticResource FontColor}"
+             Text="Descripcion"></Label>
+
+      <Editor x:Name="description"
+              TextColor="{StaticResource FontColor}"
+              Text="{Binding Description, Mode=TwoWay}"
+              BackgroundColor="White"></Editor>
+
+      <Label TextColor="{StaticResource FontColor}"
+             Text="Fecha Creacion"></Label>
+
+      <DatePicker
+          x:Name="datePicker"
+          Date="{Binding FechaCreacion, Mode=TwoWay}"
+          BackgroundColor="White">
+        <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+      </DatePicker>
+
+      <Button
+          Command="{Binding SaveCommand}"
+          Text="Guardar"></Button>
+
+    </StackLayout>
+  </ScrollView>
+
+</ContentPage>

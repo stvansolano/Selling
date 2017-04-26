@@ -28,7 +28,7 @@
         </ListView>
       </Grid>
   <ContentPage.ToolbarItems>
-    <ToolbarItem Icon="ic_action_add.png" Command="{Binding GoToCommandM}" CommandParameter="NewClientsPage">
+    <ToolbarItem Icon="ic_action_add.png" Command="{Binding GoToCommand}" CommandParameter="NewClientsPage">
     </ToolbarItem>
   </ContentPage.ToolbarItems>
 </ContentPage>

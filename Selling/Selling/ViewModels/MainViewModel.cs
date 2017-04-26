@@ -58,22 +58,9 @@ namespace Selling.ViewModels
                 case "NewOrderPage":
                     App.Navigator.PushAsync(new NewOrderPage());
                     break;
-                default:
-                    break;
-            }
-        }
-
-        public ICommand GoToCommandM
-        {
-            get { return new RelayCommand<string>(GoToM); }
-        }
-
-        private void GoToM(string pageName)
-        {
-            switch (pageName)
-            {
-                case "NewOrderPage":
-                    App.Navigator.PushAsync(new NewOrderPage());
+                case "NewClientsPage":
+                    NewCompany = new CompanyViewModel();
+                    App.Navigator.PushAsync(new NewClientsPage());
                     break;
                 default:
                     break;
@@ -170,9 +157,20 @@ namespace Selling.ViewModels
                     Title = item.Title,
                     Description = item.Description,
                     Address = item.Address,
-                    FechaCreacion = item.FechaCreacion
+                    FechaCreacion = item.FechaCreacion,
+                    BrowseCommand = new Command<CompanyViewModel>(BrowseClient)
                 });
             }
+        }
+
+        private void BrowseClient(CompanyViewModel obj)
+        {
+            NewCompany = new CompanyViewModel();
+            NewCompany.Address = obj.Address;
+            NewCompany.Description = obj.Description;
+            NewCompany.FechaCreacion = obj.FechaCreacion;
+            NewCompany.Title = obj.Title;
+            App.Navigator.PushAsync(new NewClientsPage());
         }
 
         private bool _isRefreshing;

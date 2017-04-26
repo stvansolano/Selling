@@ -18,6 +18,7 @@ namespace Selling.ViewModel
         public CompanyViewModel()
         {
             Admin = new Administrador();
+            FechaCreacion = DateTime.Today;
         }
 
         [JsonProperty("Id")]
@@ -29,11 +30,13 @@ namespace Selling.ViewModel
         [JsonProperty("Description")]
         public string Description { get; set; }
 
-        [JsonProperty("FechaCreacion")]
+        [JsonProperty("Date_Created")]
         public DateTime FechaCreacion { get; set; }
 
         [JsonProperty("Address")]
         public string Address { get; set; }
+
+        public ICommand BrowseCommand { get; set; }
 
         public ICommand SaveCommand
         {
@@ -46,17 +49,14 @@ namespace Selling.ViewModel
             {
                 await Admin.apiService.CreateCompany(new Company()
                 {
-                    Id = Guid.NewGuid().ToString(),
                     Title = this.Title,
                     Description = this.Description,
                     FechaCreacion = this.FechaCreacion,
                     Address = this.Address
                 });
 
-                //await dialogService.ShowMessage("El pedido ha sido creado.", "Informacion");
-
-                //await App.Navigator.PopToRootAsync();
-
+                Admin.ComponentesMensajes.Insert("OrderCreated");
+                Admin.navigationService.Navigate("ClientsPage");
             }
             catch (Exception e)
             {

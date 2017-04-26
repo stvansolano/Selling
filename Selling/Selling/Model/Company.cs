@@ -18,7 +18,7 @@ namespace Selling.Model
         [JsonProperty("Description")]
         public string Description { get; set; }
 
-        [JsonProperty("FechaCreacion")]
+        [JsonProperty("Date_Created")]
         public DateTime FechaCreacion { get; set; }
 
         [JsonProperty("Address")]

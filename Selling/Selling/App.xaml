@@ -78,6 +78,11 @@
                        TextColor="{StaticResource FontColor}"
                        Text="{Binding Description}"></Label>
               </StackLayout>
+              <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BrowseCommand}"
+                            CommandParameter="{Binding}"
+									  />
+              </StackLayout.GestureRecognizers>
             </Grid>
           </ViewCell>
         </DataTemplate>

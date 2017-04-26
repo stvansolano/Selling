@@ -7,6 +7,7 @@
              Title="{i18n:Translate NewOrder}"
              BindingContext="{Binding Main, Source={StaticResource Locator}}">
   <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+  
   <ScrollView BindingContext="{Binding NewOrder}">
     <StackLayout Padding="8">
       <Label Text="{i18n:Translate Title}"
